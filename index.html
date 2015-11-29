@@ -8,11 +8,9 @@
 </head>
 <body>
   <script type="text/template" class="template" id="button">
-      <% _.each( cats, function( cat ){ %>
-        <li>
-          <button><%- cat.name %></button>
-        </li>
-       <% }); %>
+    <li>
+      <button><%- cat.name %></button>
+    </li>
   </script>
   <script type="text/template" class="template" id="panel">
 		<div><span class="counter"><%- cat.counter %></span> clicks</div>

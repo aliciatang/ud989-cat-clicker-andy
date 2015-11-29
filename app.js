@@ -9,17 +9,17 @@ $(function() {
     ],
 
     init: function() {
-            this.current = 0;
             model.cats.forEach(function(cat, i) { model.cats[i]['counter'] = 0});
+            this.current = model.cats[0];
           },
     increaseCurrent: function() {
-            model.cats[this.current].counter ++;
+            this.current.counter ++;
           },
     getCurrent: function() {
-            return model.cats[this.current];
+            return this.current;
           },
-    setCurrent: function(i) {
-            this.current = i;
+    setCurrent: function(cat) {
+            this.current = cat;
           }
   };
 
@@ -39,8 +39,8 @@ $(function() {
             catsView.init();
             catView.init();
           },
-    setCurrent: function(i) {
-            model.setCurrent(i);
+    setCurrent: function(cat) {
+            model.setCurrent(cat);
             catView.render();
           },
   };
@@ -48,13 +48,17 @@ $(function() {
   var catsView = {
     init: function() {
             this.buttonsContainer = $('#buttons');
-            this.buttonTemp = _.template($('script.template#button').html(), {variable: "cats"});
+            this.buttonTemp = _.template($('script.template#button').html(), {variable: "cat"});
             catsView.render();
           },
     render: function() {
-            this.buttonsContainer.html(this.buttonTemp(octopus.getCats()));
-            this.buttonsContainer.find('button').click(function(){
-              octopus.setCurrent($('button').index(this));
+            var self = this;
+            octopus.getCats().forEach(function(cat) {
+              var button = $(self.buttonTemp(cat));
+              button.click(function(){
+                octopus.setCurrent(cat);
+              });
+              self.buttonsContainer.append(button);
             });
           }
   };
